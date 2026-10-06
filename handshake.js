@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2026 Nrupal Akolkar
+ * Licensed under the MIT License. See LICENSE for details.
+ */
+
 /**
  * Checkinfo Universal Handshake API
  * Version: 1.0.0
