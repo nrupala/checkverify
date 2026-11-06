@@ -201,6 +201,11 @@
             }
         }
         
+        // Escape token-controlled text before it is interpolated into innerHTML
+        function escText(v) {
+            return String(v ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+        }
+        
         // Verify link
         function verifyLink() {
             const input = document.getElementById('verifyInput').value.trim();
@@ -227,12 +232,12 @@
                     ${valid ? '✅' : '❌'} Status: ${valid ? 'VALID' : 'EXPIRED'}
                 </div>
                 <div style="margin-top:12px">
-                    <div><strong>Type:</strong> ${payload.data?.type}</div>
-                    <div><strong>Name:</strong> ${payload.data?.name}</div>
+                    <div><strong>Type:</strong> ${escText(payload.data?.type)}</div>
+                    <div><strong>Name:</strong> ${escText(payload.data?.name)}</div>
                     <div><strong>Created:</strong> ${new Date(payload.created).toLocaleString()}</div>
                     <div><strong>Expires:</strong> ${new Date(payload.expiry).toLocaleString()}</div>
                     <div><strong>Time Remaining:</strong> ${valid ? remaining + ' hours' : 'Expired'}</div>
-                    <div><strong>Data:</strong> <pre style="font-size:11px">${JSON.stringify(payload.data?.payload)}</pre></div>
+                    <div><strong>Data:</strong> <pre style="font-size:11px">${escText(JSON.stringify(payload.data?.payload))}</pre></div>
                 </div>
             `;
         }
